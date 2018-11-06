@@ -5,29 +5,37 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 var a = 1;
-var b = <button id="bttn">Button</button>
+
+//can't be called within class purpose??
+function AnotherTag(props){
+  return <h1>{props.num}</h1>
+}
+
 
 class Atag extends React.Component{
   //same as function Atag(){} but can set state and constructor
   constructor(props){
     super(props)
-    this.state = {b:0}
+    this.state = {
+      b:0,
+      c: ''
+    }
   }
   componentDidMount(){
     this.itv = setInterval(()=>{
-      this.setState({b: a=a+1})
-      //state (b) should not set itself
-      //the changing value of (a) sets state if (b)
-    },1000)
+      if((this.state.b)%2 == 0){
+        this.setState({c: 'asd'+this.state.b})
+      }
+      //setState can be self assignment
+      this.setState({b: this.state.b+1})
+    },1000);
+   
   }
-  componentWillUnmount(){
-    //
-    b.onclick = ()=>clearInterval(this.itv)
-  }
+  
   render(){
     return(
       <div>
-        {b}
+        <AnotherTag num={this.state.c}/>
         <p>HI! {this.state.b}</p>
       </div>
       
@@ -45,3 +53,5 @@ ReactDOM.render(<Atag />, document.getElementById('root'))
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
+//https://reactjs.org/docs/state-and-lifecycle.html
