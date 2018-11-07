@@ -27,41 +27,52 @@ function Scores(props) {
 
   )
 }
+const map = new Map([
+  [0,'rock'],[1,'paper'],[2,'scissors']
+])
+
 class Game extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      youS: 0,
-      pcS: 0,
+      yourScr: 0,
+      pcScr: 0,
     }
+    this.Toolvalue = this.ToolValue.bind(this)
   }
-  ToolValue = (val) => {
-    this.UserV = val;
-    this.PcV = Math.floor(Math.random() * 3);
-    var winner = this.PickWinner(this.UserV, this.PcV);
-    var map = new Map([[0,'rock'],[1,'paper'],[2,'scissors']])
-    if (this.state.youS == 4) {
-      console.log("!!!!!!!!!!!!!!User wins!!!!!!!!!!!!!!!!!!");
-      console.log('pc chose: '+ map.get(this.PcV));
-      this.setState({
-        pcS: 0,
-        youS: 0
-      })
-    } else if (this.state.pcS == 4) {
-      console.log('!!!!!!!!!!!!!!!!Pc wins!!!!!!!!!!!!!!!!!!!');
-      console.log('pc chose: '+ map.get(this.PcV));
-      this.setState({
-        pcS: 0,
-        youS: 0
-      })
-    }
-    else if (this.UserV == winner) {
-      console.log('User scores, pc chose: '+ map.get(this.PcV));
-      this.setState({ youS: this.state.youS + 1 })
+  ToolValue(val){
+    this.UserVal = val;
+    this.PcVal = Math.floor(Math.random() * 3);
+    var winner = this.PickWinner(this.UserVal, this.PcVal);
+     
+    if (this.UserVal == winner) {
+      console.log('User scores, pc chose: '+ map.get(this.PcVal));
+      this.setState({ yourScr: this.state.yourScr + 1 }, 
+        ()=>{
+          if (this.state.yourScr == 5) {
+            console.log("!!!!!!!!!!!!!!User wins!!!!!!!!!!!!!!!!!!");
+            console.log('pc chose: '+ map.get(this.PcVal));
+            this.setState({
+              pcScr: 0,
+              yourScr: 0
+            });
+          }
+        })
     } 
-    else if (this.PcV == winner) {
-      console.log('Pc scores, pc chose: '+map.get(this.PcV));
-      this.setState({ pcS: this.state.pcS + 1 })
+
+    else if (this.PcVal == winner) {
+      console.log('Pc scores, pc chose: '+map.get(this.PcVal));
+      this.setState({ pcScr: this.state.pcScr + 1 }, 
+        ()=>{
+          if (this.state.pcScr == 5) {
+            console.log('!!!!!!!!!!!!!!!!Pc wins!!!!!!!!!!!!!!!!!!');
+            console.log('pc chose: '+ map.get(this.PcVal));
+            this.setState({
+              pcScr: 0,
+              yourScr: 0
+            })
+          }
+      })
     } 
     else if (winner == 4){
       console.log('match');
@@ -87,7 +98,7 @@ class Game extends React.Component {
         <img width="100px" onClick={() => this.ToolValue(0)} src="http://hyperphysics.phy-astr.gsu.edu/hbase/Geophys/geopic/gneiss99.jpg" /> ,
         <img width="100px" onClick={() => this.ToolValue(1)} src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/ManilaPaper.jpg/220px-ManilaPaper.jpg" /> ,
         <img width="100px" onClick={() => this.ToolValue(2)} src="https://upload.wikimedia.org/wikipedia/commons/7/76/Pair_of_scissors_with_black_handle%2C_2015-06-07.jpg" />
-        <Scores you={this.state.youS} pc={this.state.pcS} />
+        <Scores you={this.state.yourScr} pc={this.state.pcScr} />
       </div>
 
     )
