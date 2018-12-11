@@ -6,14 +6,19 @@ import * as serviceWorker from './serviceWorker';
 import car from './cars';
 
 function CarList(props){
-  const list = props.car;
-  const aList = (
-    list.forEach(l => 
-      <li key={l.brand}>
-      {l.brand}
-    </li>
-  ));
-       
+  
+  var arr = []
+  props.car.forEach((l) => {
+    console.log(l.brand);
+    arr.push(l.brand + ' ' + l.make)  
+  })
+  
+  const aList = arr.map(c=> 
+  <li key={c}>
+    {c}
+  </li>
+  )
+  
   return(
     <ul>
       {aList}
@@ -21,6 +26,7 @@ function CarList(props){
   )
 }
 const cars = car;
+//console.log(cars);
 ReactDOM.render(<CarList car={cars}/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
