@@ -23,13 +23,18 @@ class Atag extends React.Component{
       anotherNumb: 0,
       b:0,
       c: '',
+      w: 'a'
     }
     //add a function to an event
     this.handleMouseOver = this.handleMouseOver.bind(this);
   }
   //second way
-  handleMouseOver(){
-    this.setState({anotherNumb: this.state.anotherNumb+1})
+  handleMouseOver(str){
+    this.setState({
+      anotherNumb: this.state.anotherNumb+1,
+      w: this.state.w + str + 'a' 
+    })
+    
   }
   //this is why we would use state, to track var with events
   componentDidMount(){
@@ -44,7 +49,9 @@ class Atag extends React.Component{
   render(){
     return(
       <div >
-        <p onMouseOver={this.handleMouseOver}>{this.state.anotherNumb}</p>
+        <p onMouseOver={this.handleMouseOver.bind(this,'asd')}>{this.state.anotherNumb} 
+        </p>
+        <p>{this.state.w}</p>
         <AnotherTag num={this.state.c}/>
         <p>HI! {this.state.b}</p>
         <Abutton itv={this.itv}/>
