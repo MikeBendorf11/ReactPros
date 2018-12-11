@@ -7,6 +7,12 @@ import car from './cars';
 
 function CarList(props){
   
+  var fasterList = (
+    props.car.map(x=>
+      <li key={x.brand}>{x.brand} {x.make}</li>
+    )
+  )
+
   var arr = []
   props.car.forEach((l) => {
     console.log(l.brand);
@@ -20,9 +26,16 @@ function CarList(props){
   )
   
   return(
-    <ul>
-      {aList}
-    </ul>
+    <div>
+      <p>Normal List</p>
+      <ul>
+        {aList}
+      </ul>
+      <p>Faster List</p>
+      <ul>
+        {fasterList}
+      </ul>
+    </div>
   )
 }
 const cars = car;
