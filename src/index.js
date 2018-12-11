@@ -18,8 +18,9 @@ function Abutton(props){
 class Atag extends React.Component{
   constructor(props){
     super(props)
-    this.anotherNumb = 0;
+    
     this.state = {
+      anotherNumb: 0,
       b:0,
       c: '',
     }
@@ -28,7 +29,7 @@ class Atag extends React.Component{
   }
   //second way
   handleMouseOver(){
-    this.anotherNumb = this.anotherNumb + 1;
+    this.setState({anotherNumb: this.state.anotherNumb+1})
   }
   //this is why we would use state, to track var with events
   componentDidMount(){
@@ -42,8 +43,8 @@ class Atag extends React.Component{
   
   render(){
     return(
-      <div>
-        <p onMouseOver={this.handleMouseOver}>{this.anotherNumb}</p>
+      <div >
+        <p onMouseOver={this.handleMouseOver}>{this.state.anotherNumb}</p>
         <AnotherTag num={this.state.c}/>
         <p>HI! {this.state.b}</p>
         <Abutton itv={this.itv}/>
