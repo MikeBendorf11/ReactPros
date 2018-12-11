@@ -40,9 +40,9 @@ class Atag extends React.Component{
   componentDidMount(){
     this.itv = setInterval(()=>{
       if((this.state.b)%2 == 0){
-        this.setState({c: 'asd'+this.state.b})
+        this.setState(state => ({c: 'asd'+ state.b}))
       }
-      this.setState({b: this.state.b+1})
+      this.setState(state =>({b: state.b+1}))
     },1000);
   }
   
