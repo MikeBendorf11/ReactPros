@@ -17,26 +17,26 @@ class User extends React.Component{
     this.LogoutHandler = this.LogoutHandler.bind(this);
   }
   LoginHandler(){
-    this.setState(state=>({logged: false}))
+    this.setState({logged: true})
     
   }
   LogoutHandler(){
-    this.setState(state=>({logged: true}))
+    this.setState({logged: false})
   }
 
 
   render(){
-    console.log(this.state.logged);
-    if(!this.state.logged){
+    console.log('rerendering');
+    if(this.state.logged){
         return(
-          <button onClick={this.state.LoginHandler}>
-            Login
+          <button onClick={this.LogoutHandler}>
+            Logout
           </button>
         )
     } else 
         return(
-          <button onClick={this.state.LogoutHandler}>
-          Logout
+          <button onClick={this.LoginHandler}>
+          Login
         </button>
     )
   }
