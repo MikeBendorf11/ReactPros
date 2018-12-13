@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import logo from './logo.svg';
+import './App.css';
 
 class LoginView extends React.Component{
   constructor(props){
@@ -34,18 +36,28 @@ class LoginView extends React.Component{
       },
       body: data.toString()
     })
-    .then(res => res.json())
+    .then(res => {
+      ReactDOM.render( <img src={logo} className="App-logo" alt="logo" />, document.getElementById('root2'));
+      return res.json()
+    })
     .then(response => {
-      
-      if(response.error) throw new Error();
+      console.log(response);
+      if(response.error) throw new Error(response.error);
       else{
         this.setState({token: response.token})
         console.log(this.state.token);
-        ReactDOM.render('Welcome to the Matrix', document.getElementById('root'));
+        setTimeout(function(){
+          ReactDOM.render('Welcome to the Matrix', document.getElementById('root2'))
+        }, 2000)
       }
       //console.log('Success:', JSON.stringify(response))
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+      console.log(error);
+      setTimeout(function(){
+        ReactDOM.render(error.message, document.getElementById('root2'))
+      }, 2000)
+    });
   }
   render(){
     return (
