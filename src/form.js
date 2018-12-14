@@ -5,46 +5,42 @@ import car from './cars';
 class Form extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      brand: "",
-      make: "",
-      year: 2018,
-      imageUrl: "",
-      price: 50000,
-      new: false
-    }
+    // this.state = {
+    //   brand: "",
+    //   make: "",
+    //   year: 2018,
+    //   imageUrl: "",
+    //   price: 50000,
+    //   new: false
+    // }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleChange(event) {
-    let target = event.target;
-    var value = target.type === 'checkbox' ? target.checked : target.value;
-    this.setState({
-      [target.name]: value
-    })
+    this.props.onFormChange(event);
+
   }
   handleSubmit(event){
-    event.preventDefault();
-    var newCar = this.state;
-    car.push(newCar)
-    console.log(car);
-    ReactDOM.render(<CarsObjs />, document.getElementById('root'));
+    this.props.onFormSubmit(event);
+    
+    // console.log(car);
+    // ReactDOM.render(<CarsObjs />, document.getElementById('root'));
   }
   render() {
-    console.log(this.state);
+    console.log(this.props);
     return (
       <form onSubmit={this.handleSubmit}>
         Brand:&nbsp; 
         <input
           type="text"
           name="brand"
-          value={this.state.brand}
+          value={this.props.brand}
           onChange={this.handleChange} /><br></br>
         Make:&nbsp;
         <input
           type="text"
           name="make"
-          value={this.state.make}
+          value={this.props.make}
           onChange={this.handleChange} /><br></br>
         Year: &nbsp;
         <input
@@ -52,13 +48,13 @@ class Form extends React.Component {
           min="2000"
           max="2018"
           name="year"
-          value={this.state.year}
+          value={this.props.year}
           onChange={this.handleChange} /><br></br>          
         Image Url: &nbsp;
         <input
           type="url"
           name="imageUrl"
-          value={this.state.imageUrl}
+          value={this.props.imageUrl}
           onChange={this.handleChange} /><br></br>  
          Price: &nbsp;
         <input
@@ -66,13 +62,13 @@ class Form extends React.Component {
           min="0"
           max="1000000"
           name="price"
-          value={this.state.price}
+          value={this.props.price}
           onChange={this.handleChange} /><br></br>            
          Year: &nbsp;
         <input
           type="checkbox"
           name="new"
-          value={this.state.new}
+          value={this.props.new}
           onChange={this.handleChange} /><br></br>    
         <input type="submit" value="submit"/>
       </form>

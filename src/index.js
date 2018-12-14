@@ -3,38 +3,62 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import car from './cars';
+import carJson from './cars';
 import Form from './form';
 
 
+class Container extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      brand: "",
+      make: "",
+      year: 2018,
+      imageUrl: "",
+      price: 50000,
+      new: false
+    }
+    this.default = {...this.state}
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  handleChange(event) {
+    let target = event.target;
+    var value = target.type === 'checkbox' ? target.checked : target.value;
+    this.setState({
+      [target.name]: value
+    })
+  }
+  handleSubmit(event){
+    event.preventDefault();
+    this.props.cars.push(this.state);
+    this.setState({...this.default})
+    console.log(this.props);
+  }
+  render(){
+    return(
+      <div>
+        <CarList cars={this.props.cars}/>
+        <Form {...this.state} onFormChange={this.handleChange} onFormSubmit={this.handleSubmit}/>
+      </div>
+    )
+  }
+}
+
+Container.defaultProps = {
+  cars: carJson
+}
 
 function CarList(props){
   
   var fasterList = (
-    props.car.map(x=>
+    props.cars.map(x=>
       <li key={x.brand}>{x.brand} {x.make}</li>
     )
   )
 
-  var arr = []
-  props.car.forEach((l) => {
-    console.log(l.brand);
-    arr.push(l.brand + ' ' + l.make)  
-  })
-  
-  const aList = arr.map(c=> 
-  <li key={c}>
-    {c}
-  </li>
-  )
-  
   return(
     <div>
-      <p>Normal List</p>
-      <ul>
-        {aList}
-      </ul>
-      <p>Faster List</p>
       <ul>
         {fasterList}
       </ul>
@@ -42,10 +66,8 @@ function CarList(props){
   )
 }
 
-const cars = car;
-//console.log(cars);
-ReactDOM.render(<CarList car={cars}/>, document.getElementById('root'));
-ReactDOM.render(<Form />, document.getElementById('root2'));
+ReactDOM.render(<Container/>, document.getElementById('root'));
+;
 
 
 
